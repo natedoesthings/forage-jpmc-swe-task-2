@@ -5,6 +5,7 @@ import './App.css';
 
 /**
  * State declaration for <App />
+ * incoporated boolean value, showGraph, as a way to continously show the graph
  */
 interface IState {
   data: ServerRespond[],
@@ -23,6 +24,7 @@ class App extends Component<{}, IState> {
     this.state = {
       // data saves the server responds.
       // We use this state to parse data down to the child element (Graph) as element property
+      // showGraph default value of false
       data: [],
       showGraph: false,
     };
@@ -43,6 +45,7 @@ class App extends Component<{}, IState> {
    */
   getDataFromServer() {
     let x = 0;
+    // Sets continuous interval delayed by 100 ms
     const interval = setInterval(() => {
       DataStreamer.getData((serverResponds: ServerRespond[]) => {
         // Update the state by creating a new array of data that consists of
@@ -53,6 +56,7 @@ class App extends Component<{}, IState> {
         });
       });
       x++;
+      // Clear the interval when x becomes larger than 1000
       if(x > 1000) {
         clearInterval(interval);
       }
